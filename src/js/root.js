@@ -2,16 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router,Route,hashHistory} from 'react-router';
 import { Button } from 'antd';
+import PCIndex from './component/pc_index'
 import 'antd/dist/antd.css'; 
 
 export default class Root extends React.Component{
-  render(){
+  render() {
     return (
       <div>
-        <Button type="primary">Primary</Button>
-        <Button>Default</Button>
-        <Button type="dashed">Dashed</Button>
-        <Button type="danger">Danger</Button>
+        <PCIndex />
       </div>
     );
   };
