@@ -1,17 +1,48 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import { Menu, Icon } from 'antd';
+import {
+	Menu,
+	Icon,
+	Tabs,
+	message,
+	Form,
+	Input,
+	Button,
+	CheckBox,
+	Modal
+} from 'antd';
+const FormItem = Form.Item;
 const SubMenu = Menu.SubMenu;
+const TabPane = Tabs.TabPane;
 const MenuItemGroup = Menu.ItemGroup;
 
-export default class PCHeader extends React.Component{
+class PCHeader extends React.Component{
 	constructor() {
 		super()
 		this.state = {
-			current: 'top'
+			current: 'top',
+			modalVisible: false,
+			action: 'login',
+			hasLogined: false,
+			userNickName: '',
+			userid: 0
 		}
 	}
   render() {
+		let { getFieldProps } = this.props.form;
+		const userShow = this.state.hasLogined
+			? <Menu.Item key="logout" class="register">
+					<Button type="primary" htmlType="button">{this.state.userNickName}</Button>
+					&nbsp;&nbsp;
+					<Link target="_blank">
+						<Button type="dashed" htmlType="button">个人中心</Button>
+					</Link>
+					&nbsp;&nbsp;
+					<Button type="ghost" htmlType="button">退出</Button>
+				</Menu.Item>
+			: <Menu.Item key="register" class="register">
+				<Icon type="appstore"/>注册/登录
+			</Menu.Item>;
     return (
       <div>
 				<Row>
@@ -23,7 +54,7 @@ export default class PCHeader extends React.Component{
 						</a>
 					</Col>
 					<Col span={16}>
-						<Menu mode="horizontal" selectedKeys={[this.state.current]}>
+						<Menu mode="horizontal" onClick={this.handleClick.bind(this)} selectedKeys={[this.state.current]}>
 							<Menu.Item key="top">
 								<Icon type="appstore"/>头条
 							</Menu.Item>
@@ -48,11 +79,17 @@ export default class PCHeader extends React.Component{
 							<Menu.Item key="shishang">
 								<Icon type="appstore"/>时尚
 							</Menu.Item>
+							{userShow}
 						</Menu>
 					</Col>
 					<Col span={2}></Col>
 				</Row>
+				<Modal title="用户中心" wrapClassName="vertical-center-modal" visible={this.state.modalVisible} onCancel= {()=>this.setModalVisible(false)} onOk={() => this.setModalVisible(false)} okText = "关闭">
+					
+				</Modal>
       </div>
     );
   };
 }
+
+export default PCHeader = Form.create({})(PCHeader)
