@@ -23,6 +23,14 @@ html{
   color: #2db7f5;
 }
 
+#mobileheader .header-icon {
+  float: right;
+}
+
+#mobileheader .header-icon i {
+  float: left;
+}
+
 #mobileheader i{
   font-size: 0.5rem;
   float: right;

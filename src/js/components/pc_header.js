@@ -29,6 +29,12 @@ class PCHeader extends React.Component{
 			userid: 0
 		}
 	}
+	componentWillMount() {
+		if (localStorage.userid != '') {
+			this.setState({hasLogined: true})
+			this.setState({userNickName: localStorage.userNickName, userid: localStorage.userid})
+		}
+	}
 	setModalVisible(value) {
 		this.setState({modalVisible: value})
 	}
@@ -57,6 +63,8 @@ class PCHeader extends React.Component{
 			.then(response=>response.json())
 			.then(json => {
 				this.setState({userNickName: json.NickUserName, userid: json.UserId})
+				localStorage.userid = json.UserId
+				localStorage.userNickName = json.NickUserName
 			})
 		if (this.state.action == "login") {
 			this.setState({hasLogined: true})
@@ -71,6 +79,11 @@ class PCHeader extends React.Component{
 			this.setState({action: 'register'})
 		}
 	}
+	logout() {
+		localStorage.userid = ''
+		localStorage.userNickName = ''
+		this.setState({hasLogined: false})
+	}
   render() {
 		let { getFieldProps } = this.props.form;
 		const userShow = this.state.hasLogined
@@ -81,7 +94,7 @@ class PCHeader extends React.Component{
 						<Button type="dashed" htmlType="button">个人中心</Button>
 					</Link>
 					&nbsp;&nbsp;
-					<Button type="ghost" htmlType="button">退出</Button>
+					<Button type="ghost" htmlType="button" onClick={this.logout.bind(this)}>退出</Button>
 				</Menu.Item>
 			: <Menu.Item key="register" class="register">
 				<Icon type="appstore"/>注册/登录
