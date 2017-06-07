@@ -41,6 +41,19 @@ class PCHeader extends React.Component{
 	}
 	handleSubmit(e) {
 		//页面开始向 API 进行提交数据
+		e.preventDefault();
+		var myFetchOptions = {
+			method: 'GET'
+		}
+		var formData = this.props.form.getFieldsValue()
+		console.log(formData)
+		fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=register&username=userName&password=password&r_userName="+formData.r_userName+"&r_password="+formData.r_password+"&r_confirmPassword="+formData.r_confirmPassword,myFetchOptions)
+			.then(response=>response.json())
+			.then(json => {
+				this.setState({userNickName: json.userNickName, userid: json.UserId})
+			})
+		message.success("請求成功！")
+		this.setModalVisible(false)
 	}
   render() {
 		let { getFieldProps } = this.props.form;
