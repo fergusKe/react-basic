@@ -2,6 +2,8 @@ import React from 'react';
 import {Row, Col} from 'antd';
 import {Tabs,Carousel} from 'antd';
 const TabPane = Tabs.TabPane;
+import PCNewsBlock from './pc_news_block';
+
 export default class PCNewsContainer extends React.Component {
 	render() {
 
@@ -28,6 +30,14 @@ export default class PCNewsContainer extends React.Component {
                 </Carousel>
               </div>
             </div>
+            <Tabs class="tabs_news">
+							<TabPane tab="头条新闻" key="1">
+								<PCNewsBlock count={22} type="top" width="100%" bordered="false" />
+							</TabPane>
+							<TabPane tab="国际" key="2">
+								<PCNewsBlock count={22} type="guoji" width="100%" bordered="false" />
+							</TabPane>
+						</Tabs>
           </Col>
 					<Col span={2}></Col>
 				</Row>
