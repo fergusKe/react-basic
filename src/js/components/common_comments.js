@@ -10,7 +10,8 @@ import {
 	Button,
 	CheckBox,
 	Modal,
-	Card
+	Card,
+	notification
 } from 'antd';
 const FormItem = Form.Item;
 const SubMenu = Menu.SubMenu;
@@ -38,10 +39,10 @@ class CommonComments extends React.Component {
 			method: 'GET'
 		};
 		fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=uc&userid="+localStorage.userid+"&uniquekey="+this.props.uniquekey,myFetchOptions)
-			.then(responese=>response.json())
+			.then(response=>response.json())
 			.then(json=>{
 				//收藏成功以后进行一下全局的提醒
-				
+				notification['success']({message: 'ReactNews提醒', description: '收藏此文章成功'})
 			});
 	}
 
