@@ -24,9 +24,20 @@ export default class PCUserCenter extends React.Component {
 	constructor(){
 		super();
 		this.state = {
+			usercollection: '',
 			previewImage: '',
 			previewVisible: false
 		};
+	};
+	componentDidMount() {
+		var myFetchOptions = {
+			method: 'GET'
+		};
+		fetch("http://newsapi.gugujiankong.com/Handler.ashx?action=getuc&userid=" + localStorage.userid, myFetchOptions)
+		.then(response=>response.json())
+		.then(json=>{
+			this.setState({usercollection:json});
+		});
 	};
 	render() {
 		const props = {
@@ -48,6 +59,17 @@ export default class PCUserCenter extends React.Component {
 				this.setState({previewImage:file.url,previewVisible:true});
 			}
 		};
+
+		const {usercollection} = this.state;
+		const usercollectionList = usercollection.length ?
+		usercollection.map((uc,index)=>(
+				<Card key={index} title={uc.uniquekey} extra={<a target="_blank" href={`/#/details/${uc.uniquekey}`}>查看</a>}>
+					<p>{uc.Title}</p>
+				</Card>
+		))
+		:
+		'您还没有收藏任何的新闻，快去收藏一些新闻吧。';
+
 		return (
 			<div>
 				<PCHeader/>
@@ -55,7 +77,15 @@ export default class PCUserCenter extends React.Component {
 					<Col span={2}></Col>
 					<Col span={20}>
 						<Tabs>
-							<TabPane tab="我的收藏列表" key="1"></TabPane>
+							<TabPane tab="我的收藏列表" key="1">
+								<div class="comment">
+									<Row>
+										<Col span={24}>
+											{usercollectionList}
+										</Col>
+									</Row>
+								</div>
+							</TabPane>
 							<TabPane tab="我的评论列表" key="2"></TabPane>
 							<TabPane tab="头像设置" key="3">
 								<div class="clearfix">
