@@ -94,7 +94,7 @@ class MobileHeader extends React.Component {
       <Link>
         <Icon type="logout" onClick={this.logout.bind(this)}/>
       </Link>
-      <Link>
+      <Link to={`/usercenter`}>
         <Icon type="inbox"/>
       </Link>
     </span>
